@@ -1,24 +1,20 @@
-# json.py
-
 import json
 
-# Python dictionary
-data = {
-    "name": "Aigerim",
-    "age": 19,
-    "city": "Almaty"
-}
 
-# Convert Python to JSON
-json_data = json.dumps(data)
-print(json_data)
+with open("sample-data.json") as f:
+    data = json.load(f)
 
-# Write to file
-with open("sample.json", "w") as file:
-    json.dump(data, file)
 
-# Read JSON file
-with open("sample.json", "r") as file:
-    loaded_data = json.load(file)
+print("Interface Status")
+print("="*79)
+print(f"{'DN':50} {'Description':20} {'Speed':6} {'MTU':6}")
+print("-"*50 + " " + "-"*20 + " " + "-"*6 + " " + "-"*6)
 
-print(loaded_data)
+
+for item in data["imdata"]:
+    attr = item["l1PhysIf"]["attributes"]
+    dn = attr.get("dn", "")
+    descr = attr.get("descr", "")
+    speed = attr.get("speed", "")
+    mtu = attr.get("mtu", "")
+    print(f"{dn:50} {descr:20} {speed:6} {mtu:6}")
